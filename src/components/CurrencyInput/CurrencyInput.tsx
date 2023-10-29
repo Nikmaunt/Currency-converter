@@ -32,8 +32,6 @@ const CurrencyInput: React.FC<CurrencyInputProps> = ({
         };
     };
 
-
-
     return (
         <Grid container spacing={4}>
             <Grid item xs={12} >
