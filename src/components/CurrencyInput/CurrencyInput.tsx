@@ -24,7 +24,6 @@ const CurrencyInput: React.FC<CurrencyInputProps> = ({
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newValue = parseFloat(e.target.value);
         if (!isNaN(newValue) && newValue >= 0) {
-            console.log(newValue)
             onAmountChange(newValue);
         }
         else {
