@@ -58,14 +58,11 @@ currency from the list.
 * The application should be informative( In case of error it should show the reason)
 **********
 **User guide**:
-1. Download zip-archive with code and open it in *VSCode/WebStorm*.
-2. Change directory in console to first/second version
-   `cd currency-converter`
-3. In console write next command to install all dependencies and modules for our project.
-   `npm install`
-4. Then in console write next command to start program in live server.
-   `npm run dev`
-5. In browser search bar type next text `http://127.0.0.1:5173/` or it will open automatically
-6. Enjoy it!
+1. Download the repository and open it in your preferred code editor.
+2. Change the directory in your console to the project folder.
+3. Install all project dependencies and modules using npm install.
+4. Then in console write next command to start program in live server. `npm start`
+5. Open your web browser and enter the following URL: `http://localhost:3000/` or it will open automatically
+6. Enjoy using the Currency Converter Application!
 **********
 
