@@ -13,10 +13,9 @@ import CustomSelect from "../CustomSelect/CustomSelect";
 import TabsComponent from "../TabsComponent/TabsComponent";
 import ErrorComponent from "../ErrorComponent/ErrorComponent";
 import { fetchInitialCurrencies } from "../../redux/thunks/fetchInitialCurrenciesThunk";
-import {recalculateAmounts} from "../../redux/thunks/recalculateAmountsThunk";
+import { recalculateAmounts } from "../../redux/thunks/recalculateAmountsThunk";
 import styles from "./MainContent.module.css";
 import LazyAllCurrenciesTable from "../AllCurrenciesTable/LazyAllCurrenciesTable";
-
 
 interface MainContentProps {
     selectedTab: number;
@@ -36,7 +35,7 @@ const MainContent: React.FC<MainContentProps> = ({ selectedTab, onTabChange }) =
         dispatch(fetchInitialCurrencies() as any)
             .then(() => {
                 setLoading(false);
-            })
+            });
     }, [dispatch]);
 
     useEffect(() => {
@@ -44,7 +43,7 @@ const MainContent: React.FC<MainContentProps> = ({ selectedTab, onTabChange }) =
     }, [amounts, dispatch]);
 
     const handleAmountChange = (value: number, currency: string) => {
-        dispatch(recalculateAmounts({ baseCurrency: currency, value })as any);
+        dispatch(recalculateAmounts({ baseCurrency: currency, value }) as any);
         setInputValues(value);
     };
 
@@ -59,32 +58,34 @@ const MainContent: React.FC<MainContentProps> = ({ selectedTab, onTabChange }) =
     const baseCurrency = ["USD", "EUR", "RUB", "BYN"];
 
     return (
-        <Paper elevation={3} className={styles.container}>
-            {error && <ErrorComponent />}
-            <TabsComponent selectedTab={selectedTab} onTabChange={onTabChange} />
-            {loading ? (
-                <CustomCurrencyInputSkeleton />
-            ) : selectedTab === 0 ? (
-                <div>
-                    <CurrencyInputs
-                        selectedCurrencies={selectedCurrencies}
-                        amounts={amounts}
-                        onAmountChange={handleAmountChange}
-                        handleRemoveCurrency={handleRemoveCurrency}
-                        inputValues={inputValues}
-                        baseCurrency={baseCurrency}
-                    />
-                    <CustomSelect
-                        options={Object.keys(amounts).filter(
-                            (currency) => !selectedCurrencies.includes(currency)
-                        )}
-                        onChange={handleAddCurrency}
-                    />
-                </div>
-            ) : (
-                <LazyAllCurrenciesTable  />
-            )}
-        </Paper>
+        <div className={styles.centeredContainer}>
+            <Paper elevation={3} className={styles.container}>
+                {error && <ErrorComponent />}
+                <TabsComponent selectedTab={selectedTab} onTabChange={onTabChange} />
+                {loading ? (
+                    <CustomCurrencyInputSkeleton />
+                ) : selectedTab === 0 ? (
+                    <div>
+                        <CurrencyInputs
+                            selectedCurrencies={selectedCurrencies}
+                            amounts={amounts}
+                            onAmountChange={handleAmountChange}
+                            handleRemoveCurrency={handleRemoveCurrency}
+                            inputValues={inputValues}
+                            baseCurrency={baseCurrency}
+                        />
+                        <CustomSelect
+                            options={Object.keys(amounts).filter(
+                                (currency) => !selectedCurrencies.includes(currency)
+                            )}
+                            onChange={handleAddCurrency}
+                        />
+                    </div>
+                ) : (
+                    <LazyAllCurrenciesTable />
+                )}
+            </Paper>
+        </div>
     );
 };
 

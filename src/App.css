@@ -1,9 +1,13 @@
 body{
-  background-color: #161616;
-  color: #ddd;
   padding: 50px;
 }
 h1{
-  color: #eef;
   text-align: center;
+}
+
+.root {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

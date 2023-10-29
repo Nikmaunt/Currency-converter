@@ -3,6 +3,7 @@ import Grid from "@mui/material/Grid";
 import MainContent from "./components/MainContent/MainContent";
 import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
 
+
 const App: React.FC = () => {
     const [selectedTab, setSelectedTab] = useState<number>(0);
 
