@@ -7,6 +7,11 @@ Tech stack:
 * Frontend: *React.js*
 * Backend: *Express.js*
 * Database: *Firebase*
+* API: [APILayer](https://apilayer.com/marketplace/exchangerates_data-api)
+
+Frontend deployment: [GitHub Pages](https://nikmaunt.github.io/currency-converter/)
+Backend deployment: [Render](https://render.com)
+Note: Backend code is available in [this repository](https://github.com/Nikmaunt/Currency-converter_backend).
 
 **********
 **Basic:**
@@ -15,7 +20,7 @@ Tech stack:
 * Public github repository must have README.MD with information about the test task,
   running steps, link to demo.
 * Demo should be deployed to one of the following services: DigitalOcean, GCP, AZURE,
-  AWS, Github actions, **Heroku, Netlify**
+  AWS, Github actions, Heroku, Netlify
 **********
 **Behavioral:**
 
