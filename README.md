@@ -1,6 +1,5 @@
 **Currency converter application**
 
-**********
 Tech stack:
 
 * Language: *TypeScript*
@@ -17,6 +16,8 @@ Note: Backend code is available in [this repository](https://github.com/Nikmaunt
 
 **********
 **Requirements:**
+**********
+
 **Basic:**
 
 * Use a public github repository.
