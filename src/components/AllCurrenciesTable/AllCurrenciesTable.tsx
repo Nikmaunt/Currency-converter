@@ -8,6 +8,7 @@ import {
     TableRow,
     TableCell,
     TableSortLabel,
+    Box,
 } from "@mui/material";
 import { AppDispatch } from "../../redux/store";
 import {
@@ -75,44 +76,46 @@ const AllCurrenciesTable: React.FC = React.memo(() => {
     }, [fetchSortedData, orderBy, order, initialLoad, sortState]);
 
     return (
-        <TableContainer className={styles.container}>
-            <Table aria-label="all-currencies-table">
-                <TableHead>
-                    <TableRow>
-                        <TableCell>
-                            <TableSortLabel
-                                active={orderBy === "name"}
-                                direction={order}
-                                onClick={() => handleSort("name")}
-                            >
-                                Currency Name
-                            </TableSortLabel>
-                        </TableCell>
-                        <TableCell align="right">
-                            <TableSortLabel
-                                active={orderBy === "value"}
-                                direction={order}
-                                onClick={() => handleSort("value")}
-                            >
-                                Conversion Rate to 1 USD
-                            </TableSortLabel>
-                        </TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {loading ? (
-                        <LoadingRow />
-                    ) : (
-                        Object.keys(sortedCurrencies).map((currencyCode) => (
-                            <TableRow key={currencyCode}>
-                                <TableCell>{currencyCode}</TableCell>
-                                <TableCell align="right">{sortedCurrencies[currencyCode].toFixed(4)}</TableCell>
-                            </TableRow>
-                        ))
-                    )}
-                </TableBody>
-            </Table>
-        </TableContainer>
+        <Box overflow="auto">
+            <TableContainer className={styles.container}>
+                <Table aria-label="all-currencies-table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>
+                                <TableSortLabel
+                                    active={orderBy === "name"}
+                                    direction={order}
+                                    onClick={() => handleSort("name")}
+                                >
+                                    Currency Name
+                                </TableSortLabel>
+                            </TableCell>
+                            <TableCell align="right">
+                                <TableSortLabel
+                                    active={orderBy === "value"}
+                                    direction={order}
+                                    onClick={() => handleSort("value")}
+                                >
+                                    Conversion Rate to 1 USD
+                                </TableSortLabel>
+                            </TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {loading ? (
+                            <LoadingRow />
+                        ) : (
+                            Object.keys(sortedCurrencies).map((currencyCode) => (
+                                <TableRow key={currencyCode}>
+                                    <TableCell>{currencyCode}</TableCell>
+                                    <TableCell align="right">{sortedCurrencies[currencyCode].toFixed(4)}</TableCell>
+                                </TableRow>
+                            ))
+                        )}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </Box>
     );
 });
 
