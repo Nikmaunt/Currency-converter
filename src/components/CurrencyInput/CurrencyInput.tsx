@@ -2,7 +2,6 @@ import React from "react";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import {IconButton, InputAdornment} from "@mui/material";
-import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from "@mui/icons-material/Clear";
 
 interface CurrencyInputProps {
@@ -25,6 +24,7 @@ const CurrencyInput: React.FC<CurrencyInputProps> = ({
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newValue = parseFloat(e.target.value);
         if (!isNaN(newValue) && newValue >= 0) {
+            console.log(newValue)
             onAmountChange(newValue);
         }
         else {
@@ -43,7 +43,7 @@ const CurrencyInput: React.FC<CurrencyInputProps> = ({
                     margin="dense"
                     type="number"
                     size="small"
-                    value={amount || value }
+                    value={amount ? amount : value ? value : ''}
                     onChange={handleInputChange}
                     InputProps={{
                         startAdornment: (
