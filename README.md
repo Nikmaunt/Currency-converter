@@ -3,17 +3,20 @@
 **********
 Tech stack:
 
-* Language: *TypeScript/JavaScript*
+* Language: *TypeScript*
 * Frontend: *React.js*
 * Backend: *Express.js*
 * Database: *Firebase*
 * API: [APILayer](https://apilayer.com/marketplace/exchangerates_data-api)
 
 Frontend deployment: [GitHub Pages](https://nikmaunt.github.io/currency-converter/)
+
 Backend deployment: [Render](https://render.com)
+
 Note: Backend code is available in [this repository](https://github.com/Nikmaunt/Currency-converter_backend).
 
 **********
+**Requirements:**
 **Basic:**
 
 * Use a public github repository.
