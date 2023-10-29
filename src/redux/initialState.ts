@@ -1,19 +1,16 @@
 interface CurrencyState {
     amounts: Record<string, number>;
+    sortState: Record<string, Record<string, Record<string, number>>>;
     selectedCurrencies: string[];
     sortedCurrencies: Record<string, number>;
     error:string|null
 }
 
 const initialState: CurrencyState = {
-    amounts: {
-        // USD: 1,
-        // EUR: 1,
-        // RUB: 1,
-        // BYN: 1,
-    },
+    amounts: {},
     selectedCurrencies: ["USD", "EUR", "RUB", "BYN"],
     sortedCurrencies: {},
+    sortState: {},
     error:'',
 };
 

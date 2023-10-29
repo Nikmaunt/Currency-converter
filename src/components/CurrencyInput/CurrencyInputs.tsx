@@ -23,19 +23,16 @@ const CurrencyInputs: React.FC<CurrencyInputsProps> = ({
     return (
         <>
             {selectedCurrencies.map((currency: string) => (
-                <Grid container spacing={1} key={currency}>
+                <Grid container  key={currency}   direction="row">
                     <Grid item xs={12}>
                         <CurrencyInput
                             onAmountChange={(amount: any) => onAmountChange(amount, currency)}
                             amount={amounts[currency]}
                             currency={currency}
                             value={inputValues}
+                            onClearClick={handleRemoveCurrency}
+                            baseCurrency={baseCurrency}
                         />
-                    </Grid>
-                    <Grid item xs={6} container alignItems="center" justifyContent="flex-start">
-                        {!baseCurrency.includes(currency) && (
-                            <ClearIcon onClick={() => handleRemoveCurrency(currency)} />
-                        )}
                     </Grid>
                 </Grid>
             ))}

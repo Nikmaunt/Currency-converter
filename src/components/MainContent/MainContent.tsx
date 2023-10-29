@@ -3,7 +3,6 @@ import Paper from "@mui/material/Paper";
 import { useDispatch, useSelector } from "react-redux";
 import CurrencyInputs from "../CurrencyInput/CurrencyInputs";
 import { selectAmounts, selectSelectedCurrencies, selectError } from "../../redux/selectors";
-import AllCurrenciesTable from "../AllCurrenciesTable/AllCurrenciesTable";
 import {
     addCurrency,
     removeCurrency,
@@ -15,6 +14,9 @@ import TabsComponent from "../TabsComponent/TabsComponent";
 import ErrorComponent from "../ErrorComponent/ErrorComponent";
 import { fetchInitialCurrencies } from "../../redux/thunks/fetchInitialCurrenciesThunk";
 import {recalculateAmounts} from "../../redux/thunks/recalculateAmountsThunk";
+import styles from "./MainContent.module.css";
+import LazyAllCurrenciesTable from "../AllCurrenciesTable/LazyAllCurrenciesTable";
+
 
 interface MainContentProps {
     selectedTab: number;
@@ -31,7 +33,7 @@ const MainContent: React.FC<MainContentProps> = ({ selectedTab, onTabChange }) =
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
-        dispatch(fetchInitialCurrencies()  as any)
+        dispatch(fetchInitialCurrencies() as any)
             .then(() => {
                 setLoading(false);
             })
@@ -57,7 +59,7 @@ const MainContent: React.FC<MainContentProps> = ({ selectedTab, onTabChange }) =
     const baseCurrency = ["USD", "EUR", "RUB", "BYN"];
 
     return (
-        <Paper elevation={3} style={{ padding: "1rem", width: "50%", margin: "0 auto" }}>
+        <Paper elevation={3} className={styles.container}>
             {error && <ErrorComponent />}
             <TabsComponent selectedTab={selectedTab} onTabChange={onTabChange} />
             {loading ? (
@@ -80,7 +82,7 @@ const MainContent: React.FC<MainContentProps> = ({ selectedTab, onTabChange }) =
                     />
                 </div>
             ) : (
-                <AllCurrenciesTable />
+                <LazyAllCurrenciesTable  />
             )}
         </Paper>
     );

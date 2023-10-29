@@ -2,6 +2,8 @@ import React from "react";
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+
 
 interface CustomSelectProps {
     options: string[];
@@ -36,6 +38,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ options, onChange }) => {
                 onClick={handleClick}
             >
                 Add Currency
+                    <AddCircleIcon fontSize={'small'}  />
             </Button>
             <Menu
                 id="basic-menu"

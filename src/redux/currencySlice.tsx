@@ -21,6 +21,11 @@ const currencySlice = createSlice({
                 state.selectedCurrencies.splice(index, 1);
             }
         },
+        updateSortState: (state, action: PayloadAction<{ sortBy: string, sortOrder: string, data: Record<string, number> }>) => {
+            const { sortBy, sortOrder, data } = action.payload;
+            state.sortState[sortBy] = state.sortState[sortBy] || {};
+            state.sortState[sortBy][sortOrder] = data as Record<string, number>;
+        },
         setError: (state, action) => {
             state.error = action.payload;
         },
@@ -41,5 +46,5 @@ const currencySlice = createSlice({
     },
 });
 
-export const { updateAmounts, addCurrency, removeCurrency, clearError, setError } = currencySlice.actions;
+export const { updateAmounts, addCurrency, removeCurrency, clearError, setError, updateSortState } = currencySlice.actions;
 export default currencySlice.reducer;

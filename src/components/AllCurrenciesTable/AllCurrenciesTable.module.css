@@ -1,0 +1,14 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: auto;
+    width: 100%; /* Убедитесь, что контейнер занимает всю доступную ширину */
+}
+
+/* Добавьте стили для маленьких экранов (например, максимальная ширина 600px) */
+@media (max-width: 600px) {
+    .container {
+        overflow-x: scroll; /* Измените overflow-x на "scroll" для более явной прокрутки */
+    }
+}

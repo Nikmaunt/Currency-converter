@@ -1,59 +1,81 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import TableContainer from "@mui/material/TableContainer";
-import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
-import TableHead from "@mui/material/TableHead";
-import TableBody from "@mui/material/TableBody";
-import TableRow from "@mui/material/TableRow";
-import TableCell from "@mui/material/TableCell";
-import TableSortLabel from "@mui/material/TableSortLabel";
+import {
+    TableContainer,
+    Table,
+    TableHead,
+    TableBody,
+    TableRow,
+    TableCell,
+    TableSortLabel,
+} from "@mui/material";
 import { AppDispatch } from "../../redux/store";
-import { selectSortedCurrencies } from "../../redux/selectors";
+import {
+    selectSortedCurrencies,
+    selectSortState,
+} from "../../redux/selectors";
+import {
+    sortCurrencies,
 
-import CircularProgress from "@mui/material/CircularProgress";
-import {sortCurrencies} from "../../redux/thunks/sortCurrenciesThunk";
+} from "../../redux/thunks/sortCurrenciesThunk";
+import { LoadingRow } from "./LoadingRow";
+import styles from "./AllCurrenciesTable.module.css";
+import {updateSortState} from "../../redux/currencySlice";
 
-const LoadingRow: React.FC = () => (
-    <TableRow>
-        <TableCell colSpan={2} style={{ textAlign: "center" }}>
-            <CircularProgress />
-        </TableCell>
-    </TableRow>
-);
+enum SortOrder {
+    Asc = "asc",
+    Desc = "desc",
+}
 
 const AllCurrenciesTable: React.FC = React.memo(() => {
     const sortedCurrencies = useSelector(selectSortedCurrencies);
+    const sortState = useSelector(selectSortState);
     const dispatch = useDispatch<AppDispatch>();
 
     const [orderBy, setOrderBy] = useState<string>("name");
-    const [order, setOrder] = useState<"asc" | "desc">("asc");
+    const [order, setOrder] = useState<SortOrder>(SortOrder.Asc);
     const [loading, setLoading] = useState(true);
+    const [initialLoad, setInitialLoad] = useState(true);
 
-    const fetchSortedData = useCallback(async (sortBy: string, sortOrder: "asc" | "desc") => {
-        try {
-            await dispatch(sortCurrencies({ sortBy, sortOrder }));
-            setLoading(false);
-        } catch (error) {
-            console.error("Error fetching sorted data:", error);
-        }
-    }, [dispatch]);
+    const fetchSortedData = useCallback(
+        async (sortBy: string, sortOrder: SortOrder) => {
+            try {
+                const response = await dispatch(sortCurrencies({ sortBy, sortOrder }));
+                dispatch(updateSortState({ sortBy, sortOrder, data: response.payload }));
+                setLoading(false);
+            } catch (error) {
+                console.error("Error fetching sorted data:", error);
+                setLoading(false);
+            }
+        },
+        [dispatch]
+    );
 
     const handleSort = useCallback((property: string) => {
         if (property === orderBy) {
-            setOrder(order === "asc" ? "desc" : "asc");
+            const newOrder = order === SortOrder.Asc ? SortOrder.Desc : SortOrder.Asc;
+            setOrder(newOrder);
+            fetchSortedData(property, newOrder);
         } else {
             setOrderBy(property);
-            setOrder("asc");
+            setOrder(SortOrder.Asc);
+            fetchSortedData(property, SortOrder.Asc);
         }
-    }, [orderBy, order]);
+    }, [orderBy, order, fetchSortedData]);
 
     useEffect(() => {
-        fetchSortedData(orderBy, order);
-    }, [fetchSortedData, orderBy, order]);
+        if (initialLoad || (orderBy && order)) {
+            if (sortState[orderBy] && sortState[orderBy][order]) {
+                setLoading(false);
+            } else {
+                fetchSortedData(orderBy, order);
+            }
+            setInitialLoad(false);
+        }
+    }, [fetchSortedData, orderBy, order, initialLoad, sortState]);
 
     return (
-        <TableContainer component={Paper}>
+        <TableContainer className={styles.container}>
             <Table aria-label="all-currencies-table">
                 <TableHead>
                     <TableRow>
@@ -66,13 +88,13 @@ const AllCurrenciesTable: React.FC = React.memo(() => {
                                 Currency Name
                             </TableSortLabel>
                         </TableCell>
-                        <TableCell>
+                        <TableCell align="right">
                             <TableSortLabel
                                 active={orderBy === "value"}
                                 direction={order}
                                 onClick={() => handleSort("value")}
                             >
-                                Conversion Rate (to 1 USD)
+                                Conversion Rate to 1 USD
                             </TableSortLabel>
                         </TableCell>
                     </TableRow>
@@ -84,7 +106,7 @@ const AllCurrenciesTable: React.FC = React.memo(() => {
                         Object.keys(sortedCurrencies).map((currencyCode) => (
                             <TableRow key={currencyCode}>
                                 <TableCell>{currencyCode}</TableCell>
-                                <TableCell>{sortedCurrencies[currencyCode].toFixed(4)}</TableCell>
+                                <TableCell align="right">{sortedCurrencies[currencyCode].toFixed(4)}</TableCell>
                             </TableRow>
                         ))
                     )}

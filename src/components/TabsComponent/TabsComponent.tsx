@@ -7,15 +7,15 @@ interface TabsComponentProps {
     onTabChange: (newValue: number) => void;
 }
 
-const TabsComponent: React.FC<TabsComponentProps> = ({ selectedTab, onTabChange }) => {
+const TabsComponent: React.FC<TabsComponentProps> = ({selectedTab, onTabChange}) => {
     return (
         <Tabs
             centered
             value={selectedTab}
             onChange={(event, newValue) => onTabChange(newValue)}
         >
-            <Tab label="Converter" />
-            <Tab label="All Currencies" />
+            <Tab wrapped label="Converter"/>
+            <Tab wrapped label="All Currencies"/>
         </Tabs>
     );
 };
