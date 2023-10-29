@@ -69,7 +69,7 @@ currency from the list.
 **User guide**:
 1. Download the repository and open it in your preferred code editor.
 2. Change the directory in your console to the project folder.
-3. Install all project dependencies and modules using npm install.
+3. Install all project dependencies and modules using `npm install`.
 4. Then in console write next command to start program in live server. `npm start`
 5. Open your web browser and enter the following URL: `http://localhost:3000/` or it will open automatically
 6. Enjoy using the Currency Converter Application!
