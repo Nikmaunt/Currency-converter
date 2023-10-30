@@ -1,15 +1,15 @@
 import React from "react";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
-import {IconButton, InputAdornment} from "@mui/material";
+import { IconButton, InputAdornment } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 
 interface CurrencyInputProps {
     amount: number;
     currency: string;
-    baseCurrency:string[];
+    baseCurrency: string[];
     onAmountChange: (value: number | null) => void;
-    onClearClick: (currency:string) => void;
+    onClearClick: (currency: string) => void;
     value: number;
 }
 
@@ -25,23 +25,29 @@ const CurrencyInput: React.FC<CurrencyInputProps> = ({
         const newValue = parseFloat(e.target.value);
         if (!isNaN(newValue) && newValue >= 0) {
             onAmountChange(newValue);
-        }
-        else {
+        } else {
             onAmountChange(0);
-        };
+        }
+    };
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "+" || e.key === "-") {
+            e.preventDefault();
+        }
     };
 
     return (
         <Grid container spacing={4}>
-            <Grid item xs={12} >
+            <Grid item xs={12}>
                 <TextField
-                    style={{width: '100%'}}
+                    style={{ width: "100%" }}
                     variant="outlined"
                     margin="dense"
                     type="number"
                     size="small"
-                    value={amount ? amount : value ? value : ''}
+                    value={amount ? amount : value ? value : ""}
                     onChange={handleInputChange}
+                    onKeyDown={handleKeyDown}
                     InputProps={{
                         startAdornment: (
                             <InputAdornment position="start">{currency}</InputAdornment>
@@ -49,14 +55,14 @@ const CurrencyInput: React.FC<CurrencyInputProps> = ({
                         endAdornment: (
                             <InputAdornment position="end">
                                 {!baseCurrency.includes(currency) && (
-                                    <IconButton onClick={() => onClearClick(currency)} >
-                                    <ClearIcon />
+                                    <IconButton onClick={() => onClearClick(currency)}>
+                                        <ClearIcon />
                                     </IconButton>
                                 )}
                             </InputAdornment>
                         ),
                     }}
-                    inputProps={{ min: "0", step: "any", inputMode: "numeric" }}
+                    inputProps={{ min: "0", inputMode: "numeric" }}
                 />
             </Grid>
         </Grid>
